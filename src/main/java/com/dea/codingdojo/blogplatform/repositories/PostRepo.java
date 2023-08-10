@@ -13,8 +13,7 @@ import java.util.List;
 @Repository
 public interface PostRepo extends CrudRepository<Post, Long> {
     List<Post> findAll();
-    Post findByIdIs(Long id);
-    List<Post> findAllByUsers(User user);
+
 
     List<Post> findByType(String type);
 

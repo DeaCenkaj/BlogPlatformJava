@@ -5,7 +5,6 @@ import com.dea.codingdojo.blogplatform.models.LoginUser;
 import com.dea.codingdojo.blogplatform.models.Post;
 import com.dea.codingdojo.blogplatform.models.User;
 import com.dea.codingdojo.blogplatform.services.CommentService;
-import com.dea.codingdojo.blogplatform.services.LikeService;
 import com.dea.codingdojo.blogplatform.services.PostService;
 import com.dea.codingdojo.blogplatform.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -28,8 +27,6 @@ public class HomeController {
     private UserService userService;
     @Autowired
     private PostService postService;
-    @Autowired
-    private LikeService likeService;
     @Autowired
     private CommentService commentService;
 
@@ -91,27 +88,6 @@ public class HomeController {
 
         return "dashboard";
     }
-
-    @PostMapping("/like")
-    @ResponseBody
-    public Map<String, Object> likePost(@RequestParam("postId") Long postId, HttpSession session) {
-        Map<String, Object> response = new HashMap<>();
-        Long userId = (Long) session.getAttribute("userId");
-
-        if (userId != null) {
-            // Perform logic to record the like, e.g., update database
-            // You can return additional data as needed
-            response.put("success", true);
-            // ... other data ...
-        } else {
-            response.put("success", false);
-            // ... other data ...
-        }
-
-        return response;
-    }
-
-
 
     @GetMapping("/login")
     public String loginPage(@ModelAttribute("loginUser") LoginUser loginUser) {
@@ -238,7 +214,7 @@ public class HomeController {
             @PathVariable("id") Long id,
             HttpSession session,
             Model model,
-            @Valid @ModelAttribute("comment") Comment comment, // Use "newComment" instead of "comment"
+            @Valid @ModelAttribute("comment") Comment comment,
             BindingResult result) {
         if (session.getAttribute("userId") == null) {
             return "redirect:/logout";
@@ -249,7 +225,7 @@ public class HomeController {
 
         if (result.hasErrors()) {
             model.addAttribute("post", post);
-            model.addAttribute("comments", commentService.postComments(id)); // Use a different attribute name
+            model.addAttribute("comments", commentService.postComments(id));
             return "comment";
         } else {
             Comment newComment = new Comment(comment.getName());
@@ -287,10 +263,6 @@ public class HomeController {
         return "profile";
     }
 
-
-
-
-    // Add other CRUD operations (edit and delete) for posts and comments as needed
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.setAttribute("userId", null);

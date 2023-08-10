@@ -110,7 +110,7 @@
                                         </div>
                                         <div class="timeline-content">
                                             <p>
-                                            <h4 class="card-title "><b><c:out value="${post.title}"/></b></h4>
+                                                <a href="/viewPost/${post.id}">  <h4 class="card-title "><c:out value="${post.title}"/></h4></a>
 
                                             </p>
                                             <c:out value="${post.body}"/>

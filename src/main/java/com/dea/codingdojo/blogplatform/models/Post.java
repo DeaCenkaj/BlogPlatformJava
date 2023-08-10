@@ -56,9 +56,7 @@ private String type;
     @Column(updatable=false)
     @OneToMany(mappedBy="post", fetch=FetchType.LAZY)
     private List<Comment> comment;
-    @Column(updatable=false)
-    @OneToMany(mappedBy="post", fetch=FetchType.LAZY)
-    private List<Like> like;
+
 
     public Long getId() {
         return id;
@@ -156,11 +154,5 @@ private String type;
         this.date = date;
     }
 
-    public List<Like> getLike() {
-        return like;
-    }
 
-    public void setLike(List<Like> like) {
-        this.like = like;
-    }
 }

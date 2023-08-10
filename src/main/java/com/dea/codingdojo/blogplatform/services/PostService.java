@@ -51,7 +51,7 @@ public class PostService {
         }
     }
     public List<Post> findPostsByUserId(Long userId) {
-        return postRepo.findByUsers_Id(userId); // Assuming you have a findByUserId method in your repository
+        return postRepo.findByUsers_Id(userId);
     }
 
 }
